@@ -160,14 +160,14 @@ def search_songs(
     field: str = "artist",
 ) -> List[Song]:
     """Return songs matching the query on a given field."""
-    if not query:
-        return songs
+    if not query: #if the user hasn't searched for anything, display full song list
+        return songs 
 
-    q = query.lower().strip()
-    filtered: List[Song] = []
+    q = query.lower().strip() #normalize the query for case-insensitive matching
+    filtered: List[Song] = [] #initialize an empty list to hold matching songs
 
-    for song in songs:
-        value = str(song.get(field, "")).lower()
+    for song in songs: #iterate through each song 
+        value = str(song.get(field, "")).lower() #get the value of the specified field from the song and normalize it for comparison
         if value and value in q:
             filtered.append(song)
 
