@@ -111,3 +111,11 @@ If you finish early or want an extra challenge, try one of these:
 - Stay curious. The unpredictability is intentional and part of the experience.
 
 When you finish, Playlist Chaos will feel more predictable, and you will have taken your first steps into AI-assisted debugging.
+
+
+# TF's Summary
+
+-**1. Core Concepts:** Students need to understand are how to explain the code logic, recognize bugs and/or inefficiencies, test and validate changes with the help of VS Code Copilot Chat while evaluating AI reasoning and suggested improvements. 
+-**2. Struggles:** Students are most likely to struggle setting up the environment if they are not familiar with vscode and stream lit. In the tinker activity, there’s no streamlit tutorial and I highly recommend, they come in ready with the set up. I, myself, ran into a few issues where I had to make sure the files were saved correctly and I was in the correct directory. 
+- **3. Success and Misses of AI Help:** AI was helpful in suggesting code improvements however even though there was an emphasis on improving redundancies, there was some code that I had to cut down from the AI suggestion and manually tweak to fully remove redundancies. (ex: I spotted redundancy in string conversion that I could omit from inside the normalize_song function since I knew the new function normalize_input was already handling it even though this was not suggested by Copilot). 
+- **4. Guiding Students:** To guide students without giving away the answer, I’ll ask them to walk through the function line by line and explain to me what each part of the code is doing. During this process, I’ll keep bringing them back to the bigger picture such as how each piece connects to the overall logic and how it aligns with the project requirements. As a result, they may build enough context to recognize gaps, misunderstandings, or broken functionality and confident refining code with the aid of CoPilot without blindly trusting it.
