@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 Song = Dict[str, object]
 PlaylistMap = Dict[str, List[Song]]
@@ -12,30 +12,28 @@ DEFAULT_PROFILE = {
 }
 
 
-def normalize_title(title: str) -> str:
-    """Normalize a song title for comparisons."""
-    if not isinstance(title, str):
+def normalize_input(value: Any, lower: bool = True) -> str:
+    """Normalize input (e.g. title, artist, genre, query) to a lowecased and stripped string"""
+    if value is None:
         return ""
-    return title.strip()
-
-
-def normalize_artist(artist: str) -> str:
-    """Normalize an artist name for comparisons."""
-    if not artist:
-        return ""
-    return artist.strip().lower()
-
-
-def normalize_genre(genre: str) -> str:
-    """Normalize a genre name for comparisons."""
-    return genre.lower().strip()
+    elif not isinstance(value, str): #necessary in case query isn't a string, such as a number or None, we want to handle it gracefully without crashing the app
+        try:
+            value = str(value)
+        except Exception:
+            return ""
+    if lower:
+        return value.lower().strip()  
+    else:
+        return value.strip() #for title, keep original case
 
 
 def normalize_song(raw: Song) -> Song:
     """Return a normalized song dict with expected keys."""
-    title = normalize_title(str(raw.get("title", "")))
-    artist = normalize_artist(str(raw.get("artist", "")))
-    genre = normalize_genre(str(raw.get("genre", "")))
+     # for title, we want to preserve the original case for display purposes,
+    #  but we can still normalize it for comparisons by using the normalize_input function with lower=False
+    title = normalize_input(raw.get("title", ""), lower=False)
+    artist = normalize_input(raw.get("artist", ""))
+    genre = normalize_input(raw.get("genre", ""))
     energy = raw.get("energy", 0)
 
     if isinstance(energy, str):
@@ -163,7 +161,8 @@ def search_songs(
     if not query: #if the user hasn't searched for anything, display full song list
         return songs 
 
-    q = query.lower().strip() #normalize the query for case-insensitive matching
+    #q = query.lower().strip() #normalize the query for case-insensitive matching, can possibly use the normalize_str function here instead 
+    q = normalize_input(query, lower=True) #using the new normalize_input function to handle various input types and ensure consistent normalization
     filtered: List[Song] = [] #initialize an empty list to hold matching songs
 
     for song in songs: #iterate through each song 
